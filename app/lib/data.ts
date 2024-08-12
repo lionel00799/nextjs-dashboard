@@ -24,8 +24,11 @@ export async function fetchRevenue(): Promise<Revenue[]> {
   try {
     console.log('Fetching revenue data...');
     await new Promise((resolve) => setTimeout(resolve, 3000));
+
     const result = await client.query<Revenue>('SELECT * FROM revenue');
+
     console.log('Data fetch completed after 3 seconds.');
+
     return result.rows;
   } catch (error: unknown) {
     console.error('Database Error:', error);
@@ -35,6 +38,9 @@ export async function fetchRevenue(): Promise<Revenue[]> {
 
 export async function fetchLatestInvoices() {
   try {
+    console.log('Fetching revenue data...');
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+
     const result = await client.query<LatestInvoiceRaw>(`
       SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
       FROM invoices
@@ -42,6 +48,8 @@ export async function fetchLatestInvoices() {
       ORDER BY invoices.date DESC
       LIMIT 5
     `);
+
+    console.log('Data fetch completed after 3 seconds.');
 
     const latestInvoices = result.rows.map((invoice) => ({
       ...invoice,
@@ -56,7 +64,13 @@ export async function fetchLatestInvoices() {
 
 export async function fetchCardData() {
   try {
+    console.log('Fetching revenue data...');
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+
     const invoiceCountPromise = client.query('SELECT COUNT(*) FROM invoices');
+
+    console.log('Data fetch completed after 3 seconds.');
+    
     const customerCountPromise = client.query('SELECT COUNT(*) FROM customers');
     const invoiceStatusPromise = client.query(`
       SELECT
