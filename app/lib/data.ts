@@ -22,7 +22,10 @@ await client.connect();
 
 export async function fetchRevenue(): Promise<Revenue[]> {
   try {
+    console.log('Fetching revenue data...');
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     const result = await client.query<Revenue>('SELECT * FROM revenue');
+    console.log('Data fetch completed after 3 seconds.');
     return result.rows;
   } catch (error: unknown) {
     console.error('Database Error:', error);
